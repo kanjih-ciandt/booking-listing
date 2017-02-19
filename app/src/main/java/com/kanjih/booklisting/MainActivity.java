@@ -43,7 +43,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     public void onClick(View v) {
                         ProgressBar progressBar =  (ProgressBar) findViewById(R.id.progressbar);
                         progressBar.setVisibility(View.VISIBLE);
-                        getLoaderManager().initLoader(1, null, MainActivity.this);
+                        TextView mSearch = (TextView) findViewById(R.id.tx_search);
+                        getLoaderManager().initLoader(mSearch.getText().hashCode(), null, MainActivity.this);
                     }
                 }
         );
@@ -91,16 +92,27 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         Log.i(LOG_TAG, "onLoadFinished");
         ProgressBar progressBar =  (ProgressBar) findViewById(R.id.progressbar);
         progressBar.setVisibility(View.GONE);
-        updateUI(books);
+
+        TextView mEmptyStateTextView = (TextView) findViewById(R.id.empty_view);
 
 
+        if(adapter != null){
+            adapter.clear();
+        }
+
+        if(books != null && !books.isEmpty()){
+            mEmptyStateTextView.setText("");
+            updateUI(books);
+        } else{
+            // Set empty state text to display "No earthquakes found."
+            mEmptyStateTextView.setText(R.string.no_books);
+        }
     }
 
     @Override
     public void onLoaderReset(Loader<List<Book>> loader) {
         Log.i(LOG_TAG, "onLoaderReset");
         updateUI(new ArrayList<Book>());
-
     }
 
     /**
@@ -108,14 +120,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
      * @param books
      */
     private void updateUI(final List<Book> books) {
-
         adapter = new BookAdapter(this,0,books);
-
         // Find a reference to the {@link ListView} in the layout
         final ListView earthquakeListView = (ListView) findViewById(R.id.list);
-
         earthquakeListView.setAdapter(adapter);
-
-
     }
 }
