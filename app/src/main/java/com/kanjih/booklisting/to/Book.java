@@ -23,6 +23,14 @@ public class Book {
         this.authors = authors;
     }
 
+
+    public Book(String id, String title, List<String> authors, String linkSmallThumbnail) {
+        this.id = id;
+        this.title = title;
+        this.authors = authors;
+        this.linkSmallThumbnail = linkSmallThumbnail;
+    }
+
     public Book(String id, String title, List<String> authors, String publisher, String description, String linkSmallThumbnail, String linkThumbnail, String language, Integer pageCount) {
         this.id = id;
         this.title = title;

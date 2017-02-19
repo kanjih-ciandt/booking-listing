@@ -84,7 +84,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public Loader<List<Book>> onCreateLoader(int id, Bundle args) {
         Log.i(LOG_TAG, "onCreateLoader");
         TextView mSearch = (TextView) findViewById(R.id.tx_search);
-        return new BookLoadAsyncTask(this, URL+"q="+mSearch.getText()+"&maxResults=10");
+
+        String parameter = mSearch.getText().toString().replace(" ","+");
+        return new BookLoadAsyncTask(this, URL+"q="+parameter+"&maxResults=10");
     }
 
     @Override

@@ -37,15 +37,31 @@ public class BookAdapter extends ArrayAdapter<Book> {
         TextView mAuthor = (TextView) convertView.findViewById(R.id.book_author);
 
         mTitle.setText(book.getTitle());
-        mAuthor.setText(book.getAuthors().toString());
+        mAuthor.setText(this.converterAuthors(book.getAuthors()));
 
-
-
-
-        // Return the whole list item layout (containing 2 TextViews and an ImageView)
-        // so that it can be shown in the ListView
         return convertView;
 
+    }
+
+    private String converterAuthors(List<String> authors) {
+        StringBuilder builder = new StringBuilder().append("by ");
+
+        for(String author : authors){
+            builder.append(author+ ", ");
+        }
+        int pos = builder.lastIndexOf(",");
+
+        if(pos > 0) {
+            builder.replace(pos, pos + 1, "");
+        }
+
+        if(builder.length() == 3) {
+            builder.append("-");
+        }
+
+
+
+        return  builder.toString();
     }
 
 
