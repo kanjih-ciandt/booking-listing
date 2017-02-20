@@ -17,8 +17,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 /**
  * Created by kneto on 2/19/17.
  */
@@ -36,12 +34,9 @@ public final class BookJsonUtils {
 
     }
 
-
     public static List<Book> fetchBooksData(String requestUrl){
         Log.i(LOG_TAG, "fetchBooksData");
-
         List<Book> bookList;
-
         URL url = JsonUtils.createUrl(requestUrl);
 
         // Perform HTTP request to the URL and receive a JSON response back
@@ -54,9 +49,7 @@ public final class BookJsonUtils {
 
         bookList = extractBooks(jsonResponse);
 
-
         return bookList;
-
     }
 
     /**
@@ -64,12 +57,9 @@ public final class BookJsonUtils {
      * parsing a JSON response.
      */
     public static List<Book> extractBooks(String bookJSON) {
-
         ArrayList<Book> books = new ArrayList<Book>();
 
         try {
-
-
             // build up a list of Earthquake objects with the corresponding data.
             JSONObject root = new JSONObject(bookJSON);
 
@@ -95,11 +85,8 @@ public final class BookJsonUtils {
                     JSONObject imageLinks = volumeInfo.getJSONObject("imageLinks");
                     smallThumbnail = getImage(imageLinks.getString("smallThumbnail"));
                 }
-
-
                books.add(new Book(item.getString("id"), volumeInfo.getString("title"), authors, smallThumbnail));
             }
-
 
         } catch (JSONException e) {
             // If an error is thrown when executing any of the above statements in the "try" block,
@@ -108,11 +95,8 @@ public final class BookJsonUtils {
             Log.e(LOG_TAG, "Problem parsing the  JSON results", e);
         }
 
-
         return books;
-
     }
-
 
     private static Bitmap getImage(String url) {
         Bitmap mIcon = null;

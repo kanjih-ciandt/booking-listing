@@ -54,7 +54,6 @@ public class BookAdapter extends ArrayAdapter<Book> {
         }
 
         return convertView;
-
     }
 
     private String converterAuthors(List<String> authors) {

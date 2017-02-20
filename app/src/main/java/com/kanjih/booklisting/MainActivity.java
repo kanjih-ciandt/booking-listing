@@ -36,17 +36,22 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        this.checkConnectivity();
+        this.isConnectOnInternet();
 
         ImageButton imgButton =  (ImageButton) findViewById(R.id.btn_search);
         imgButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        ProgressBar progressBar =  (ProgressBar) findViewById(R.id.progressbar);
-                        progressBar.setVisibility(View.VISIBLE);
-                        TextView mSearch = (TextView) findViewById(R.id.tx_search);
-                        getLoaderManager().initLoader(mSearch.getText().hashCode(), null, MainActivity.this);
+
+                        if(isConnectOnInternet()) {
+                            ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressbar);
+                            progressBar.setVisibility(View.VISIBLE);
+                            TextView mSearch = (TextView) findViewById(R.id.tx_search);
+                            getLoaderManager().initLoader(mSearch.getText().hashCode(), null, MainActivity.this);
+                        } else {
+                            updateUI(new ArrayList<Book>());
+                        }
                     }
                 }
         );
@@ -72,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     /**
      * Check if the app have access in the internet
      */
-    private void checkConnectivity (){
+    private boolean isConnectOnInternet(){
         ConnectivityManager cm =
                 (ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);
 
@@ -83,20 +88,29 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         TextView mEmptyStateTextView = (TextView) findViewById(R.id.empty_view);
         Button bTryConnect = (Button) findViewById(R.id.try_connect);
 
+        TextView mSearch = (TextView) findViewById(R.id.tx_search);
+        ImageButton bSearch = (ImageButton) findViewById(R.id.btn_search);
+
         if(isConnected) {
             bTryConnect.setVisibility(View.GONE);
             mEmptyStateTextView.setText("");
+            mSearch.setEnabled(true);
+            bSearch.setEnabled(true);
         } else {
             bTryConnect.setVisibility(View.VISIBLE);
             mEmptyStateTextView.setText(R.string.no_internet);
             ProgressBar progressBar =  (ProgressBar) findViewById(R.id.progressbar);
             progressBar.setVisibility(View.GONE);
+            mSearch.setText("");
+            mSearch.setEnabled(false);
+            bSearch.setEnabled(false);
         }
 
+        return isConnected;
     }
 
     public void onClickTryConnect(View view) {
-        checkConnectivity();
+        isConnectOnInternet();
     }
 
     @Override
@@ -123,10 +137,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         if(books != null && !books.isEmpty()){
             mEmptyStateTextView.setText("");
-            bookList = (ArrayList<Book>) books;
             updateUI(books);
         } else{
-            // Set empty state text to display "No earthquakes found."
+            // Set empty state text to display "No book found."
             mEmptyStateTextView.setText(R.string.no_books);
         }
     }
@@ -143,6 +156,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
      */
     private void updateUI(final List<Book> books) {
         adapter = new BookAdapter(this,0,books);
+        bookList = (ArrayList<Book>) books;
         // Find a reference to the {@link ListView} in the layout
         final ListView bookListView = (ListView) findViewById(R.id.list);
         bookListView.setAdapter(adapter);

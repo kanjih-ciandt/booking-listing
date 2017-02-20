@@ -20,9 +20,6 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="15dp">
-
-
-
     <ImageView
         android:id="@+id/img_book"
         android:layout_width="36dp"
@@ -56,10 +53,5 @@
             android:textSize="10sp"
             android:text="Place"
             android:textStyle="italic"/>
-
     </LinearLayout>
-
-
-
-
 </LinearLayout>
