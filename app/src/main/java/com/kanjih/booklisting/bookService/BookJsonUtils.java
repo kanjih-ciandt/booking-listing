@@ -77,7 +77,7 @@ public final class BookJsonUtils {
             for(int i = 0; i < arrayOfItens.length(); i++){
                 JSONObject item = arrayOfItens.getJSONObject(i);
                 JSONObject volumeInfo = item.getJSONObject("volumeInfo");
-                Log.d(LOG_TAG,"KK2 -" + volumeInfo.getString("title"));
+
                 ArrayList<String> authors = new ArrayList<String>();
                 if(volumeInfo.has("authors")) {
                     JSONArray arrayOfAuthor = volumeInfo.getJSONArray("authors");

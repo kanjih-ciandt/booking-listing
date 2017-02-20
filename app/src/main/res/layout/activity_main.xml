@@ -12,13 +12,16 @@
        android:layout_height="wrap_content"
        android:padding="12dp"
        android:orientation="horizontal"
+
        >
        <EditText
            android:id="@+id/tx_search"
            android:layout_width="0dp"
            android:layout_weight="6"
            android:layout_height="match_parent"
-           android:text="Android" />
+           android:hint="@string/search"
+           android:inputType=
+               "textCapSentences|textAutoCorrect"/>
        <ImageButton
            android:id="@+id/btn_search"
            android:layout_width="0dp"
@@ -52,7 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="try connect again ?"
+            android:text="@string/try_connect"
             android:visibility="invisible"
             android:layout_below="@+id/empty_view"
             android:onClick="onClickTryConnect"/>

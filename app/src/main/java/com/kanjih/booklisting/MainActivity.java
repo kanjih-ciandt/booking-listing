@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     private BookAdapter adapter;
 
+    private ArrayList<Book> bookList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +50,23 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     }
                 }
         );
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putSerializable("bookList",  bookList);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        bookList = (ArrayList<Book>) savedInstanceState.getSerializable("bookList");
+
+        if(bookList != null && !bookList.isEmpty()){
+            updateUI(bookList);
+        }
     }
 
     /**
@@ -104,6 +123,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         if(books != null && !books.isEmpty()){
             mEmptyStateTextView.setText("");
+            bookList = (ArrayList<Book>) books;
             updateUI(books);
         } else{
             // Set empty state text to display "No earthquakes found."
@@ -124,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private void updateUI(final List<Book> books) {
         adapter = new BookAdapter(this,0,books);
         // Find a reference to the {@link ListView} in the layout
-        final ListView earthquakeListView = (ListView) findViewById(R.id.list);
-        earthquakeListView.setAdapter(adapter);
+        final ListView bookListView = (ListView) findViewById(R.id.list);
+        bookListView.setAdapter(adapter);
     }
 }

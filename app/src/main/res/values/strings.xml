@@ -9,4 +9,7 @@
 
     <string name="no_books">No books found.</string>
     <string name="no_internet">No internet connection.</string>
+
+    <string name="search">Search</string>
+    <string name="try_connect">Try connect again ?</string>
 </resources>
