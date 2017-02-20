@@ -1,5 +1,7 @@
 package com.kanjih.booklisting.to;
 
+import android.graphics.Bitmap;
+
 import java.util.List;
 
 /**
@@ -16,6 +18,14 @@ public class Book {
     private String linkThumbnail;
     private String language;
     private Integer pageCount;
+    private Bitmap smallThumbnail;
+
+    public Book(String id, String title, List<String> authors, Bitmap smallThumbnail) {
+        this.id = id;
+        this.title = title;
+        this.authors = authors;
+        this.smallThumbnail = smallThumbnail;
+    }
 
     public Book(String id, String title, List<String> authors) {
         this.id = id;
@@ -113,5 +123,9 @@ public class Book {
 
     public void setPageCount(Integer pageCount) {
         this.pageCount = pageCount;
+    }
+
+    public Bitmap getSmallThumbnail() {
+        return smallThumbnail;
     }
 }

@@ -44,6 +44,7 @@
             android:gravity="left"
             android:textAllCaps="true"
             android:textSize="18sp"
+            android:textStyle="bold"
             />
         <TextView
             android:id="@+id/book_author"
@@ -53,7 +54,8 @@
             android:ellipsize="end"
             android:maxLines="2"
             android:textSize="10sp"
-            android:text="Place"/>
+            android:text="Place"
+            android:textStyle="italic"/>
 
     </LinearLayout>
 

@@ -1,15 +1,24 @@
 package com.kanjih.booklisting.bookService;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.kanjih.booklisting.R;
 import com.kanjih.booklisting.to.Book;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 /**
@@ -39,6 +48,11 @@ public class BookAdapter extends ArrayAdapter<Book> {
         mTitle.setText(book.getTitle());
         mAuthor.setText(this.converterAuthors(book.getAuthors()));
 
+        if(book.getSmallThumbnail() != null){
+            ImageView img = (ImageView) convertView.findViewById(R.id.img_book);
+            img.setImageBitmap(book.getSmallThumbnail());
+        }
+
         return convertView;
 
     }
@@ -63,6 +77,5 @@ public class BookAdapter extends ArrayAdapter<Book> {
 
         return  builder.toString();
     }
-
 
 }

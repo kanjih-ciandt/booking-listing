@@ -1,5 +1,7 @@
 package com.kanjih.booklisting.bookService;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import com.kanjih.booklisting.to.Book;
@@ -10,6 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -85,7 +88,16 @@ public final class BookJsonUtils {
                         }
                     }
                 }
-               books.add(new Book(item.getString("id"), volumeInfo.getString("title"), authors ));
+
+                Bitmap smallThumbnail = null;
+
+                if(volumeInfo.has("imageLinks")) {
+                    JSONObject imageLinks = volumeInfo.getJSONObject("imageLinks");
+                    smallThumbnail = getImage(imageLinks.getString("smallThumbnail"));
+                }
+
+
+               books.add(new Book(item.getString("id"), volumeInfo.getString("title"), authors, smallThumbnail));
             }
 
 
@@ -99,5 +111,17 @@ public final class BookJsonUtils {
 
         return books;
 
+    }
+
+
+    private static Bitmap getImage(String url) {
+        Bitmap mIcon = null;
+        try {
+            InputStream in = new java.net.URL(url).openStream();
+            mIcon = BitmapFactory.decodeStream(in);
+        } catch (Exception e) {
+            Log.e("Error", e.getMessage());
+        }
+        return mIcon;
     }
 }
