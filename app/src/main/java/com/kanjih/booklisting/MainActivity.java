@@ -47,6 +47,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                         if(isConnectOnInternet()) {
                             ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressbar);
                             progressBar.setVisibility(View.VISIBLE);
+                            TextView mEmptyStateTextView = (TextView) findViewById(R.id.empty_view);
+                            mEmptyStateTextView.setVisibility(View.GONE);
                             TextView mSearch = (TextView) findViewById(R.id.tx_search);
                             getLoaderManager().initLoader(mSearch.getText().hashCode(), null, MainActivity.this);
                         } else {
@@ -68,9 +70,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         super.onRestoreInstanceState(savedInstanceState);
 
         bookList = (ArrayList<Book>) savedInstanceState.getSerializable("bookList");
-
+        TextView mEmptyStateTextView = (TextView) findViewById(R.id.empty_view);
         if(bookList != null && !bookList.isEmpty()){
+            mEmptyStateTextView.setVisibility(View.GONE);
+            mEmptyStateTextView.setText("");
             updateUI(bookList);
+        } else{
+            mEmptyStateTextView.setVisibility(View.VISIBLE);
+            mEmptyStateTextView.setText(R.string.empty_state);
         }
     }
 
@@ -92,8 +99,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         ImageButton bSearch = (ImageButton) findViewById(R.id.btn_search);
 
         if(isConnected) {
-            bTryConnect.setVisibility(View.GONE);
-            mEmptyStateTextView.setText("");
+
             mSearch.setEnabled(true);
             bSearch.setEnabled(true);
         } else {

@@ -12,4 +12,5 @@
 
     <string name="search">Search</string>
     <string name="try_connect">Try connect again ?</string>
+    <string name="empty_state">Search your Book !!! Using the field above </string>
 </resources>
